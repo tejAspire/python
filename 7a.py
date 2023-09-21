@@ -37,4 +37,15 @@ class Triangle(Shape):
     def calcArea(self):
         self.area = self.base * self.height / 2
     
+c1 = Circle(5)
+c1.calcArea()
+c1.showArea()
+r1 = Rectangle(5, 4)
+r1.calcArea()
+r1.showArea()
+t1 = Triangle(3, 4)
+t1.calcArea()
+t1.showArea()
+
+    
 
