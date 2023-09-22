@@ -1,37 +1,51 @@
 from openpyxl import Workbook
 from openpyxl.styles import Font
 
-# Create a new workbook
 wb = Workbook()
-
-# Create sheets and set titles
 sheet = wb.active
 sheet.title = "Language"
 wb.create_sheet(title="Capital")
 
-# Data
 lang = ["Kannada", "Telugu", "Tamil"]
 state = ["Karnataka", "Telangana", "Tamil Nadu"]
 capital = ["Bengaluru", "Hyderabad", "Chennai"]
 code = ['KA', 'TS', 'TN']
 
-# Set headers and apply bold font
-for sheet_name in ["Language", "Capital"]:
-    sheet = wb[sheet_name]
-    sheet.cell(row=1, column=1).value = "State"
-    sheet.cell(row=1, column=2).value = "Language" if sheet_name == "Language" else "Capital"
-    sheet.cell(row=1, column=3).value = "Code"
+# Set header row and apply bold font
+sheet.cell(row=1, column=1).value = "State"
+sheet.cell(row=1, column=2).value = "Language"
+sheet.cell(row=1, column=3).value = "Code"
+ft = Font(bold=True)
 
-    ft = Font(bold=True)
-    for row in sheet["A1:C1"]:
-        for cell in row:
-            cell.font = ft
+for row in sheet["A1:C1"]:
+    for cell in row:
+        cell.font = ft
 
-# Populate data
-for sheet_name, data in zip(["Language", "Capital"], [state, lang, code] if sheet_name == "Language" else [state, capital, code]):
-    sheet = wb[sheet_name]
-    for i, value in enumerate(data, start=2):
-        sheet.cell(row=i, column=1).value = value
+# Fill in data for the "Language" sheet
+for i in range(2, 5):
+    sheet.cell(row=i, column=1).value = state[i - 2]
+    sheet.cell(row=i, column=2).value = lang[i - 2]
+    sheet.cell(row=i, column=3).value = code[i - 2]
 
-# Save workbook
+wb.save("demo.xlsx")
+
+# Switch to the "Capital" sheet
+sheet = wb["Capital"]
+
+# Set header row and apply bold font
+sheet.cell(row=1, column=1).value = "State"
+sheet.cell(row=1, column=2).value = "Capital"
+sheet.cell(row=1, column=3).value = "Code"
+ft = Font(bold=True)
+
+for row in sheet["A1:C1"]:
+    for cell in row:
+        cell.font = ft
+
+# Fill in data for the "Capital" sheet
+for i in range(2, 5):
+    sheet.cell(row=i, column=1).value = state[i - 2]
+    sheet.cell(row=i, column=2).value = capital[i - 2]
+    sheet.cell(row=i, column=3).value = code[i - 2]
+
 wb.save("demo.xlsx")
